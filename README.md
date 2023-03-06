@@ -1,2 +1,3 @@
 # full-stack-open
-A repoository for learning Full Stack Open
+
+A repository for learning Full Stack Open
