@@ -73,12 +73,10 @@ const App = (props) => {
       // id: notes.length + 1, ommitted because it's better to let the server generate ids for our resources
     };
 
-    noteService
-      .create("http://localhost:3001/notes", noteObject)
-      .then((returnedNote) => {
-        setNotes(notes.concat(returnedNote));
-        setNewNote("");
-      });
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes(notes.concat(returnedNote));
+      setNewNote("");
+    });
   };
 
   const handleNoteChange = (event) => {

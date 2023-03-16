@@ -1,0 +1,26 @@
+GET http://localhost:3001/api/notes/
+
+###
+DELETE  http://localhost:3001/api/notes/7
+
+###
+POST http://localhost:3001/api/notes/
+Content-Type: application/json
+
+{
+    "content": "Ensure that everything still works",
+    "important": ""
+}
+
+###
+DELETE http://localhost:3001/api/notes/6412be48065ce17dde5e5ecc
+Content-Type: application/json
+
+###
+PUT http://localhost:3001/api/notes/6412be4c065ce17dde5e5ece
+Content-Type: application/json
+
+{
+    "content": "shishang",
+    "important": "false"
+}

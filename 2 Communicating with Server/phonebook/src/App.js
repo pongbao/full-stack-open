@@ -32,54 +32,70 @@ const App = () => {
     };
     event.preventDefault();
     if (persons.some((person) => person.name === newName)) {
-      window.confirm(
-        `${newName} is already added to phonebook, replace the old number with a new one?`
-      );
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const person = persons.find((p) => p.name === personObject.name);
 
-      const person = persons.find((p) => p.name === personObject.name);
-      const updatedPerson = { ...person, number: personObject.number };
+        const updatedPerson = { ...person, number: personObject.number };
 
+        phonebookService
+          .update(updatedPerson)
+          .then((returnedPerson) => {
+            console.log(returnedPerson);
+            setPersons(
+              persons.map((p) => (p.id !== person.id ? p : returnedPerson))
+            );
+            setIsError(false);
+            setMessage(`Changed ${personObject.name}'s number`);
+          })
+          .catch((error) => {
+            // console.log(error.response.data.error);
+
+            setIsError(true);
+            setMessage(
+              `Information of ${personObject.name} has already been removed from the server`
+            );
+            phonebookService
+              .getAll()
+              .then((initialPersons) => setPersons(initialPersons));
+          });
+        setNewName("");
+        setNewNumber("");
+      }
+    } else {
       phonebookService
-        .update(updatedPerson)
+        .create(personObject)
         .then((returnedPerson) => {
-          setPersons(
-            persons.map((p) => (p.id !== person.id ? p : returnedPerson))
-          );
+          setPersons(persons.concat(returnedPerson));
           setIsError(false);
-          setMessage(`Changed ${personObject.name}'s number`);
+          setMessage(`Added ${personObject.name}`);
+          setNewName("");
+          setNewNumber("");
         })
         .catch((error) => {
           setIsError(true);
-          setMessage(
-            `Information of ${personObject.name} has already been removed from the server`
-          );
-          phonebookService
-            .getAll()
-            .then((initialPersons) => setPersons(initialPersons));
+          setMessage(error.response.data.error);
         });
-    } else {
-      phonebookService.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setIsError(false);
-        setMessage(`Added ${personObject.name}`);
-      });
     }
     setTimeout(() => {
       setMessage(null);
     }, 5000);
-    setNewName("");
-    setNewNumber("");
   };
-
   const removePerson = (name, id) => {
-    window.confirm(`Delete ${name}?`);
-    phonebookService.remove(id).then((returnedPersons) => {
-      setPersons(returnedPersons);
-      setIsError(false);
-      setMessage(`Deleted ${name} from the directory`);
-    });
-    setNewName("");
-    setNewNumber("");
+    if (window.confirm(`Delete ${name}?`)) {
+      phonebookService.remove(id).then((returnedPersons) => {
+        setPersons(returnedPersons);
+        setIsError(false);
+        setTimeout(() => {
+          setMessage(`Deleted ${name} from the directory`);
+        }, 5000);
+      });
+      setNewName("");
+      setNewNumber("");
+    }
   };
 
   const handleNameChange = (event) => {
