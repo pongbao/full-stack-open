@@ -2,6 +2,14 @@
 
 ## Simple web server
 
+    npm init
+
+initialize an npm package
+
+    echo \"Error: no test specified\" && exit 1
+
+test portion
+
     const http = require('http')
 
 In the first row, the application imports Node's built-in web server module. This is practically what we have already been doing in our browser-side code, but with a slightly different syntax:
