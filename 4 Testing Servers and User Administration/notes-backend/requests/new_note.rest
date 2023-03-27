@@ -1,7 +1,9 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBvbmdiYW8iLCJpZCI6IjY0MWViNmRkYWYyOWNlMmMwNjBlMmE2ZiIsImlhdCI6MTY3OTgwMTExMn0.CHf7G9HsFm_pVnu5Lra-MjYAuUlXV6RTasoh3sqs1tY
 
 {
-  "content": "REST-client on hyvä API:n testaamisessa",
-  "important": true
+  "content": "Sheesh Kafel",
+  "important": true,
+  "userId": "641eb6ddaf29ce2c060e2a6f"
 }
