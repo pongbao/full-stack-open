@@ -163,7 +163,7 @@ const resolvers = {
       person.phone = args.phone;
 
       try {
-        await person.save();
+        return person.save();
       } catch (error) {
         throw new GraphQLError("Saving number failed", {
           extensions: {
