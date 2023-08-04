@@ -1268,3 +1268,9 @@ The following is the list of all general-purpose PostgreSQL built-in functions �
 - PostgreSQL ARRAY Functions − The PostgreSQL ARRAY aggregate function puts input values, including nulls, concatenated into an array.
 - PostgreSQL Numeric Functions − Complete list of PostgreSQL functions required to manipulate numbers in SQL.
 - PostgreSQL String Functions − Complete list of PostgreSQL functions required to manipulate strings in PostgreSQL.
+
+# Other Functions
+
+## Resetting a sequence
+
+    ALTER SEQUENCE your_sequence_name RESTART WITH your_desired_starting_value;

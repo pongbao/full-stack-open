@@ -48,3 +48,61 @@ That is, when the application starts, the command CREATE TABLE IF NOT EXISTS "no
     Note.sync()
 
 Searching for a single note is possible with the method `findByPk`, because it is retrieved based on the id of the primary key
+
+## Connection between tables
+
+    User.hasMany(Note)
+    Note.belongsTo(User)
+    Note.sync({ alter: true })
+    User.sync({ alter: true })
+
+## Operators
+
+https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
+
+# Migrations
+
+We could proceed as before, i.e. change the model that defines the table and rely on Sequelize to synchronize the changes to the database. This is specified by these lines in the file models/index.js
+
+    Note.sync({ alter: true })
+    User.sync({ alter: true })
+
+However, this approach does not make sense in the long run. Let's remove the lines that do the synchronization and move to using a much more robust way, **migrations** provided by Sequelize (and many other libraries).
+
+In practice, a migration is a single JavaScript file that describes some modification to a database. A separate migration file is created for each single or multiple changes at once. Sequelize keeps a record of which migrations have been performed, i.e. which changes caused by the migrations are synchronized to the database schema. When creating new migrations, Sequelize keeps up to date on which changes to the database schema are yet to be made. In this way, changes are made in a controlled manner, with the program code stored in version control.
+
+## umzug
+
+We could run the migrations from the command line using the Sequelize command line tool. However, we choose to perform the migrations manually from the program code using the Umzug library. Let's install the library
+
+    npm install umzug
+
+## Eager fetch vs lazy fetch
+
+### Eager fetch
+
+When we make queries using the `include`` attribute:
+
+    User.findOne({
+        include: {
+            model: Note
+        }
+    })
+
+The so-called **eager fetch** occurs, i.e. all the rows of the tables attached to the user by the join query, in the example the notes made by the user, are fetched from the database at the same time.
+
+### Lazy fetch
+
+%here are also situations where you want to do a so-called **lazy fetch**, e.g. search for user related teams only if they are needed.
+
+## Migration and model redundancy
+
+Couldn't we optimize the code so that, for example, the model exports the shared parts needed for the migration?
+
+However, the problem is that the definition of the model may change over time, for example the name field may change or its data type may change. Migrations must be able to be performed successfully at any time from start to end, and if the migrations are relying on the model to have certain content, it may no longer be true in a month or a year's time. Therefore, despite the "copy paste", the migration code should be completely separate from the model code.
+
+### Sequelize CLI
+
+Generates both models and migration files based on commands given at the command line. For example, the following command would create a User model with name, username, and admin as attributes, as well as the migration that manages the creation of the database table:
+
+    npx sequelize-cli model:generate --name User --attributes name:string,username:string,admin:boolean
