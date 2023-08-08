@@ -8,10 +8,7 @@ const typeDefs = `
     name: String!
     phone: String
     address: Address!
-    friendOf: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }]
+    friendOf: [User!]!
     id: ID!
   }
 
@@ -28,9 +25,9 @@ const typeDefs = `
   }
 
   type User {
-  username: String!
-  friends: [Person!]!
-  id: ID!
+    username: String!
+    friends: [Person!]!
+    id: ID!
   }
 
   type Token {
@@ -38,31 +35,31 @@ const typeDefs = `
   }
 
   type Mutation {
-  addPerson(
-    name: String!
-    phone: String
-    street: String!
-    city: String!
-  ): Person
-  editNumber(
-    name: String!
-    phone: String!
-  ): Person
-  createUser(
-    username: String!
-  ): User
-  login(
-    username: String!
-    password: String!
-  ): Token
-  addAsFriend(
-    name: String!
-  ): User
-}
+    addPerson(
+      name: String!
+      phone: String
+      street: String!
+      city: String!
+    ): Person
+    editNumber(
+      name: String!
+      phone: String!
+    ): Person
+    createUser(
+      username: String!
+    ): User
+    login(
+      username: String!
+      password: String!
+    ): Token
+    addAsFriend(
+      name: String!
+    ): User
+  }
 
-type Subscription {
-  personAdded: Person!
-}    
+  type Subscription {
+    personAdded: Person!
+  }    
 `;
 
 module.exports = typeDefs;
