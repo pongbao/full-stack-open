@@ -53,3 +53,9 @@
    - `i` : Case-insensitive matching.
    - `g` : Global matching (find all matches, not just the first one).
    - `m` : Multi-line matching.
+
+# Fly.io
+
+## Virtual Machines
+
+https://fly.io/docs/apps/scale-machine/#:~:text=fly%20scale%20commands%20apply%20VM,even%20if%20it%20has%20crashed.

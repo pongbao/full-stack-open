@@ -181,11 +181,11 @@ SQL syntax
 
 List all tables
 
-    -d
+    \d
 
 Check table
 
-    -d [table_name]
+    \d [table_name]
 
 ## Drop Table
 
@@ -1270,6 +1270,12 @@ The following is the list of all general-purpose PostgreSQL built-in functions â
 - PostgreSQL String Functions âˆ’ Complete list of PostgreSQL functions required to manipulate strings in PostgreSQL.
 
 # Other Functions
+
+View all tables in the current PostgreSQL database for the current user,
+
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = current_schema();
 
 ## Resetting a sequence
 

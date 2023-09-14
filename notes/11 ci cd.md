@@ -159,6 +159,8 @@ Let's define some things we want in this hypothetical deployment system too:
 
 With Github Actions: https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 
+    fly auth token
+
 Each deployment in Fly.io creates a release. Releases can be checked from the command line:
 
     flyctl releases
